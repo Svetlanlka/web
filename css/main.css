@@ -66,29 +66,25 @@ main .container.first-container {
     position: relative;
 }
 
-.like-count {
+/* .like-count {
     margin-right: 25px;
-}
+} */
 
-.like-count::before {
-    content: "";
-    position: absolute;
+.is-like, .not-like {
+    border: none !important;
+    box-shadow: none !important;
     width: 20px;
     height: 20px;
-    background: url("../img/not-like.png") no-repeat;
-    background-size: contain;
-    right: 0px;
 }
 
-.like-count:hover::before {
-    content: "";
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background: url("../img/like.png") no-repeat;
-    background-size: contain;
-    right: 0px;
+.not-view {
+    display: none;
 }
+
+/* .likes img:hover {
+    background-color: aqua;
+    box-shadow: 1px 1px 1px red inset;
+} */
 
 main .container.introduce {
     width: 100%;
@@ -201,4 +197,8 @@ input[type="checkbox"] {
     content: "Not_correct";
     color:red;
     font-weight: bold;
+}
+
+.author {
+    color: #0a0b13;
 }

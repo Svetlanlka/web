@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en" class="h-100">
+  <head>
+    <meta charset="utf-8">
+    <title>Cats learn Web</title>
+    <link rel="shortcut icon" href="img/avatar-icon.png" style = "border-radius: 25px">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href= "css/main.css" rel="stylesheet">
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    <link href="css/sticky-footer-navbar.css" rel="stylesheet">
+    <link href="node_modules/bootstrap/scss/_variables.scss" rel="stylesheet">
+  </head>
+
+<body class="d-flex flex-column h-100">    
+<header>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Cats learn WEB</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class = "nav-item me-2">
+              <a class="btn btn-primary" type="submit" href = "html/ask.html">ASK</a>
+          </li>
+          <li class = "nav-item">
+            <form class="d-flex">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+          </li>
+        </ul>
+        <div class="authorized d-flex">
+          <div class = "d-flex">
+            <div class = "container-sm">
+              <div class="row">
+                <a class="btn btn-sm btn-outline-secondary" href="#">Log out</a>
+              </div>
+              <div class="row">
+                <a class="btn btn-sm btn-outline-secondary" href="html/settings.html">Settings</a>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex">
+            <a class="link-secondary" href="#" aria-label="Search">
+              <img src = "img/avatar.png" class = "my-avatar">
+            </a>
+          </div>
+        </div>
+        <!-- <div class="not-authorized">
+          <div class = "d-flex">
+            <div class = "container-sm">
+              <div class="row">
+                <a class="btn btn-sm btn-outline-secondary" href="#">Log in</a>
+              </div>
+              <div class="row">
+                <a class="btn btn-sm btn-outline-secondary" href="#">Register</a>
+              </div>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </nav>
+</header>
+
+
+<main class="flex-shrink-0 background-img">
+  <div class="container introduce first-container">
+    Hello! Interested in the WEB ? Join our group of cats-programmers!
+    Ask questions and help others. 
+    Increase you rating and become professional in web programming!
+  </div>
+  <div class="container-sm text-center mt-3 d-flex align-items-begin justify-content-center">
+    <h1>New Questions</h1>
+    <a class = "top-questions-href">Popular questions</a>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-8">
+        <div class = "row question question-border">
+          <div class="col-3">
+            <div class = "row">
+              <a href = "html/question.html"><img src = "../img/ava-vk-cats-86.jpg"></a>
+            </div>
+            <div class = "row">
+              <a class = "author" href = "#">Persik</a>
+            </div>
+          </div>
+          <div class="col-9">
+              <div class = "row">
+                <a href="html/question.html" class="question-header">Escape - последовательности</a>
+                <div class="question-description">Какие последовательности 
+                  являются escape-последовательностями, запускающимися с “\\033]”</div>
+              </div>
+              <div class="row">
+                <div class="col-4">
+                  <span>Answers: </span>
+                  <span class="question-count">3</span>
+                </div>
+                <div class="col-7">
+                  <span class="question-tags d-flex">
+                    <span>Tags: </span>
+                    <a class = "tag q-tag" href="html/search_tag.html">bush</a>
+                    <a class = "tag q-tag" href="html/search_tag.html">HTML</a>
+                    <a class = "tag q-tag" href="html/search_tag.html">JavaScript</a>
+                    <a class = "tag q-tag" href="html/search_tag.html">Bootstrap</a>
+                  </span>
+                </div>
+              </div>
+              <div class="likes justify-content-end d-flex align-items-center">
+                <span class = "d-flex me-2">5345343</span>
+                <span class="like-count-up d-flex me-1" style="margin: -10px">
+                  <img src = "../img/not-like.png" class = "not-like">
+                  <img src = "../img/is-like.svg" class = "is-like not-view">
+                </span>
+                <span class = "d-flex me-2">22342</span>
+                <span class="like-count-down d-flex" style="margin: -10px">
+                  <img src = "../img/not-dislike.png" class = "not-like not-view">
+                  <img src = "../img/is-dislike.png" class = "is-like">
+                </span>
+              </div>
+              <div class = "justify-content-end me-2 mt-2 d-flex">
+                <span class = "me-2">DATE:</span>
+                <span class = "date">18.12.2021</span>
+              </div>
+          </div>
+        </div>
+
+        <div class = "row question question-border">
+          <div class="col-3">
+            <div class = "row">
+              <a href = "html/question.html"><img src = "../img/cat-beautiful.jpg"></a>
+            </div>
+            <div class = "row">
+              <a class = "author" href = "#">Murka</a>
+            </div>
+          </div>
+          <div class="col-9">
+            <div class = "row">
+              <a href="html/question.html" class="question-header">Post и Get запросы</a>
+              <div class="question-description">Post и Get запросы, какая между ними разница и что лучше и для каких целей?</div>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <span>Answers: </span>
+                <span class="question-count">3</span>
+              </div>
+              <div class="col-6">
+                <span class="question-tags d-flex">
+                  <span>Tags: </span>
+                  <a class = "tag q-tag" href="html/search_tag.html">JavaScript</a>
+                  <a class = "tag q-tag" href="html/search_tag.html">HTML</a>
+                </span>
+              </div>
+            </div>
+            <div class="likes justify-content-end d-flex align-items-center">
+              <span class = "d-flex me-2">3333</span>
+              <span class="like-count-up d-flex me-1" style="margin: -10px">
+                <img src = "../img/not-like.png" class = "not-like">
+                <img src = "../img/is-like.svg" class = "is-like not-view">
+              </span>
+              <span class = "d-flex me-2">2222</span>
+              <span class="like-count-down d-flex" style="margin: -10px">
+                <img src = "../img/not-dislike.png" class = "not-like not-view">
+                <img src = "../img/is-dislike.png" class = "is-like">
+              </span>
+            </div>
+            <div class = "justify-content-end me-2 mt-2 d-flex">
+              <span class = "me-2">DATE:</span>
+              <span class = "date">22.03.2020</span>
+            </div>
+          </div>
+        </div>
+
+        <div class = "row question question-border">
+          <div class="col-3">
+            <div class = "row">
+              <a href = "html/question.html"><img src = "../img/cat-smart.jpg"></a>
+            </div>
+            <div class = "row">
+              <a class = "author" href = "#">Mr. Jack</a>
+            </div>
+          </div>
+          <div class="col-9">
+            <div class = "row">
+              <a href="html/question.html" class="question-header">Вопрос про background-image</a>
+              <div class="question-description">Как сделать background-image на весь экран, при условии того, 
+                что будет видна вся картинка?</div>
+            </div>
+            <div class="row">
+              <div class="col-4">
+                <span>Answers: </span>
+                <span class="question-count">3</span>
+              </div>
+              <div class="col-6">
+                <span class="question-tags d-flex">
+                  <span>Tags: </span>
+                  <a class = "tag q-tag" href="html/search_tag.html">HTML</a>
+                </span>
+              </div>
+            </div>
+            <div class="likes justify-content-end d-flex align-items-center">
+              <span class = "d-flex me-2">3</span>
+              <span class="like-count-up d-flex me-1" style="margin: -10px">
+                <img src = "../img/not-like.png" class = "not-like">
+                <img src = "../img/is-like.svg" class = "is-like not-view">
+              </span>
+              <span class = "d-flex me-2">1</span>
+              <span class="like-count-down d-flex" style="margin: -10px">
+                <img src = "../img/not-dislike.png" class = "not-like not-view">
+                <img src = "../img/is-dislike.png" class = "is-like">
+              </span>
+            </div>
+            <div class = "justify-content-end me-2 mt-2 d-flex">
+              <span class = "me-2">DATE:</span>
+              <span class = "date">01.01.2021</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-4">
+        <div class = "row my-colon">
+          <h3>Popular Tags</h3>
+          <div class="tags">
+            <a class = "tag tag-popular" href="html/search_tag.html">HTML</a>
+            <a class = "tag tag-popular" href="html/search_tag.html">JavaScript</a>
+            <a class = "tag tag-popular" href="html/search_tag.html">CSS</a>
+            <a class = "tag tag-popular" href="html/search_tag.html">Bootstrap</a>
+            <a class = "tag tag-popular" href="html/search_tag.html">MySQL</a>
+            <a class = "tag tag-popular" href="html/search_tag.html">nginx</a>
+            <a class = "tag tag-popular" href="html/search_tag.html">jQuery</a>
+            <a class = "tag tag-popular" href="html/search_tag.html">django</a>
+            <a class = "tag tag-popular" href="html/search_tag.html">python</a>
+            <a class = "tag tag-popular" href="html/search_tag.html">memcached</a>
+            <a class = "tag tag-popular" href="html/search_tag.html">bash</a>
+          </div>
+        </div>
+        <div class = "row my-colon">
+          <h3>TOP-5 Cats</h3>
+          <div class="tags">
+            <ul class = "top-cats">
+              <li><a href="#" class = "cat-in-top">Persik</a></li>
+              <li><a href="#" class = "cat-in-top">Murka</a></li>
+              <li><a href="#" class = "cat-in-top">Mr. Jack</a></li>
+              <li><a href="#" class = "cat-in-top">Petr</a></li>
+              <li><a href="#" class = "cat-in-top">Harry</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="container d-flex pages py-1 align-items-center">
+    <a class="page">1</a>
+    <a class="page">2</a>
+    <a class="page">3</a>
+    <a class="page">...</a>
+    <a class="page">100</a>
+  </div>
+</main>
+
+<footer class="py-3 bg-dark d-flex justify-content-end">
+  <div class="container">
+    
+  </div>
+</footer>
+
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+      
+  </body>
+</html>
+

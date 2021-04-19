@@ -1,0 +1,101 @@
+{% extends "include/base.html" %}
+{% load static %}
+
+{% block content %}
+  {% for question in questions %}
+        {% include "include/question.html" %}
+  {% endfor %}
+
+  {% comment %} <div class = "row question question-border">
+    <div class="col-3">
+      <div class = "row">
+        <a href = "../html/question.html"><img src = "../img/cat-intelligent.jpg"></a>
+      </div>
+      <div class = "row">
+        <a class = "author" href = "#">Petr</a>
+      </div>
+    </div>
+    <div class="col-9">
+      <div class = "row">
+        <div class="question-answer">запрос ГЕТ передаётся через строку адреса, ПОСТ - удобнее для отправки из формы..<br> 
+          запрос ГЕТ ограничен по длине, через ПОСТ можно отправить гораздо больше данных по длине 
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4 d-flex correct">
+          <form>
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+          </form>
+        </div>
+      </div>
+      <div class="likes justify-content-end d-flex align-items-center">
+        <span class = "d-flex me-2">3333</span>
+        <span class="like-count-up d-flex me-1" style="margin: -10px">
+          <img src = "../img/not-like.png" class = "not-like">
+          <img src = "../img/is-like.svg" class = "is-like not-view">
+        </span>
+        <span class = "d-flex me-2">2222</span>
+        <span class="like-count-down d-flex" style="margin: -10px">
+          <img src = "../img/not-dislike.png" class = "not-like not-view">
+          <img src = "../img/is-dislike.png" class = "is-like">
+        </span>
+      </div>
+      <div class = "justify-content-end me-2 mt-2 d-flex">
+        <span class = "me-2">DATE:</span>
+        <span class = "date">21.03.2020</span>
+      </div>
+    </div>
+  </div>
+  <div class = "row question question-border">
+    <div class="col-3">
+      <div class = "row">
+        <a href = "../html/question.html"><img src = "../img/cat-in-shock.jpg"></a>
+      </div>
+      <div class = "row">
+        <a class = "author" href = "#">Harry</a>
+      </div>
+    </div>
+    <div class="col-9">
+      <div class = "row">
+        <div class="question-answer">GET передается в адресе: 
+          www.***.com/?a=1&b=2 
+          передаст 2 GET-параметра, a и b. 
+          POST передается в запросе и не воспроизводится по ссылке.  
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4 d-flex correct">
+          <form>
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          </form>
+        </div>
+      </div>
+      <div class="likes justify-content-end d-flex align-items-center">
+        <span class = "d-flex me-2">3</span>
+        <span class="like-count-up d-flex me-1" style="margin: -10px">
+          <img src = "../img/not-like.png" class = "not-like">
+          <img src = "../img/is-like.svg" class = "is-like not-view">
+        </span>
+        <span class = "d-flex me-2">1</span>
+        <span class="like-count-down d-flex" style="margin: -10px">
+          <img src = "../img/not-dislike.png" class = "not-like not-view">
+          <img src = "../img/is-dislike.png" class = "is-like">
+        </span>
+      </div>
+      <div class = "justify-content-end me-2 mt-2 d-flex">
+        <span class = "me-2">DATE:</span>
+        <span class = "date">22.03.2020</span>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+      <form>
+          <div class="input-group mt-2">
+              <textarea placeholder="Напишите сюда свой ответ на вопрос" style="height: 150px" class="col-12"></textarea>
+          </div>
+          <div class="d-flex justify-content-start mt-2">
+              <button class="btn btn-dark" type="submit" href = "#">ANSWER</button>
+          </div>
+      </form> 
+  </div> {% endcomment %}
+{% endblock content %}

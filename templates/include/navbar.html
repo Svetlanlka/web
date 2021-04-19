@@ -1,0 +1,61 @@
+{% load static %}
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Cats learn WEB</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <li class = "nav-item me-2">
+                <a class="btn btn-primary" type="submit" href = "{% url 'ask' %}">ASK</a>
+            </li>
+            <li class = "nav-item">
+              <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+              </form>
+            </li>
+          </ul>
+          {% comment %}{% if user.authorized %}{% endcomment %}
+          <div class="authorized d-flex">
+            <div class = "d-flex">
+              <div class = "container-sm">
+                <div class="row">
+                  <a class="btn btn-sm btn-outline-secondary" href="#">Log out</a>
+                </div>
+                <div class="row">
+                  <a class="btn btn-sm btn-outline-secondary" href="{% url 'settings' %}">Settings</a>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex">
+              <a class="link-secondary" href="#" aria-label="Search">
+                {% comment %} <img src = "{% if user.profile.avatar %} 
+                  {{user.profile.avatar.url}}
+                  {% else %}
+                  {% static 'img/avatar.png' %}
+                  {% endif %}" class = "my-avatar"> {% endcomment %}
+                  <img src="{% static 'img/avatar.png' %}" class="my-avatar">
+              </a>
+            </div>
+          </div>
+          {% comment %} {% else %}
+          <div class="not-authorized">
+              <div class = "d-flex">
+                <div class = "container-sm">
+                  <div class="row">
+                    <a class="btn btn-sm btn-outline-secondary" href="{% url 'login' %}">Log in</a>
+                  </div>
+                  <div class="row">
+                    <a class="btn btn-sm btn-outline-secondary" href="{% url 'register' %}">Register</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endif %} {% endcomment %}
+        </div>
+      </div>
+    </nav>
+  </header>

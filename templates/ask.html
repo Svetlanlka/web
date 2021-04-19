@@ -1,0 +1,37 @@
+{%extends "include/base.html" %}
+{% load static %}
+<!doctype html>
+<html lang="en" class="h-100">
+
+{% include "include/navbar.html" %}
+           
+      {% block content %}
+      <form class="ask-title">
+        <div class="input-group mb-3 mt-3">
+          <label for="validationServer01" class="col-2 form-label">Title</label>
+          <input type="text" id = "validationServer01" class = "col-10 form-control is-valid" placeholder="Введите логин" required>
+          <div id="validationServer02" class="invalid-feedback">
+            Please enter title
+          </div>
+          </div>
+          <div class="input-group mb-3">
+            <label class="col-2 form-label" for="validationServer02">Text</label>
+            <textarea class = "col-10 form-control is-valid" id = "validationServer02" style="height: 150px" placeholder="Введите текст вопроса"></textarea>
+            <div id="validationServer02" class="invalid-feedback">
+              Please enter question text
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <label class="col-2 form-label" for="validationServer03">Tags</label>
+            <input type="text" id = "validationServer03" class = "col-10 form-control is-invalid" placeholder="Введите теги" required>
+            <div id="validationServer02" class="invalid-feedback">
+              Wrong tags
+            </div>
+          </div>
+          <div class="d-flex justify-content-end">
+            <button class="btn btn-dark" type="submit" href = "#">ASK</button>
+          </div>
+      </form>  
+      {% endblock content %}           
+
+</html>

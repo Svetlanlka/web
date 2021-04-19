@@ -3,4 +3,4 @@ node_modules/
 .idea/
 .vscode/
 *.рус
-__pychache__/
+__pycache__/

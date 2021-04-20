@@ -42,8 +42,10 @@ def new_questions(request):
     return render(request, 'new_questions.html', {'questions': new_questions})
 
 def one_question(request, id):
-    q = Question.objects.filter(pk=id)
-    return render(request, 'one_question.html', {'questions': q})
+    q = Question.objects.get(pk=id)
+    q2 = q.answers.all()
+    answers = paginate(q2, request, 3)
+    return render(request, 'one_question.html', {'question': q, 'answers': answers})
 
 def register(request):
     return render(request, 'register.html', {})

@@ -62,6 +62,9 @@ class Answer(models.Model):
     def __str__(self):
         return self.user.username
 
+    def get_answers(self):
+        return answers
+
     class Meta:
         verbose_name = 'Ответ'
         verbose_name_plural = 'Ответы'
@@ -70,7 +73,7 @@ class Tag(models.Model):
     name = models.CharField(max_length=100, default=None)
 
     def __str__(self):
-            return self.name
+        return self.name
 
     class Meta:
         verbose_name = 'Тег'

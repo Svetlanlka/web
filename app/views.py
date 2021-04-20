@@ -29,7 +29,7 @@ def ask(request):
     return render(request, 'ask.html', {})
 
 def hot_questions(request):
-    questns = Question.objects.all().select_related()
+    questns = Question.objects.all().select_related().order_by('rating')
     questions = paginate(questns, request, 3)
     return render(request, 'hot_questions.html', {'questions':questions})
 
@@ -37,7 +37,7 @@ def login(request):
     return render(request, 'login.html', {})
 
 def new_questions(request):
-    questns = Question.objects.all().select_related()
+    questns = Question.objects.all().select_related().order_by('-date')
     new_questions = paginate(questns, request, 3)
     return render(request, 'new_questions.html', {'questions': new_questions})
 

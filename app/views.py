@@ -2,7 +2,8 @@ from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import render
 from django.views import View
 
-from app.models import Question, User, Tag
+from app.models import Question, Tag, Profile
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -60,7 +61,7 @@ def popular_tags_processor(request):
     return {'popular_tags':top_tags}
 
 def top_cats_processor(request):
-    top_cats = User.objects.all()
+    top_cats = Profile.objects.all()
     return {'top_cats':top_cats}
 
 def paginate(objects_list, request, per_page = 5):

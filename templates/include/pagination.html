@@ -27,5 +27,5 @@
     {% if questions.max_page <= questions.questions_list.paginator.num_pages%}
           <a href="?page={{ questions.questions_list.paginator.num_pages }}" class="page">&raquo; {{ questions.questions_list.paginator.num_pages }}</a>
     {% endif %}
-    <div>number:{{questions.questions_list.number}} min: {{questions.min_page}} max: {{questions.max_page}} num: {{questions.questions_list.paginator.num_pages}} </div>
+    {% comment %} <div>number:{{questions.questions_list.number}} min: {{questions.min_page}} max: {{questions.max_page}} num: {{questions.questions_list.paginator.num_pages}} </div> {% endcomment %}
   </div>

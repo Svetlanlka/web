@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+# from django.conf.urls.i18n import i18n_patterns
 
 from django.conf.urls.static import static
 from django.conf import settings
@@ -31,6 +32,9 @@ urlpatterns = [
     path('register/', views.register, name = 'register'),
     path('search_tag/<slug:tag_name>/', views.search_tag, name='search_tag'),
     path('settings/', views.settings, name = 'settings'),
+    path('accounts/', include('allauth.urls')),
+    # path('pages/', include('django.contrib.flatpages.urls')),
+    # path('contact/', include("contact.urls")),
     path('', views.index),
 ]
 

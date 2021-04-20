@@ -18,7 +18,7 @@
               </form>
             </li>
           </ul>
-          {% comment %}{% if user.authorized %}{% endcomment %}
+          {% if user.is_authenticated %}
           <div class="authorized d-flex">
             <div class = "d-flex">
               <div class = "container-sm">
@@ -32,16 +32,15 @@
             </div>
             <div class="d-flex">
               <a class="link-secondary" href="#" aria-label="Search">
-                {% comment %} <img src = "{% if user.profile.avatar %} 
-                  {{user.profile.avatar.url}}
-                  {% else %}
-                  {% static 'img/avatar.png' %}
-                  {% endif %}" class = "my-avatar"> {% endcomment %}
+                {% if user.profile.photo %}
+                  <img src = "{{STATIC_URL}}{{user.profile.photo.url}}" alt={{user.profile.name}} class="my-avatar">
+                {% else %}
                   <img src="{% static 'img/avatar.png' %}" class="my-avatar">
+                {% endif %}
               </a>
             </div>
           </div>
-          {% comment %} {% else %}
+          {% else %}
           <div class="not-authorized">
               <div class = "d-flex">
                 <div class = "container-sm">
@@ -54,7 +53,7 @@
                 </div>
               </div>
             </div>
-            {% endif %} {% endcomment %}
+          {% endif %}
         </div>
       </div>
     </nav>

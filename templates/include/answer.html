@@ -1,0 +1,21 @@
+{% extends "include/base_question.html" %}
+{% load static %}
+
+{% block qborder %}
+<div class = "row question question-border">
+{% endblock qborder%}
+
+{% block correct %}
+<div class="col-4 d-flex {% if question.is_correct %}correct{% endif %}">
+  <form>
+    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+  </form>
+</div>
+{% endblock correct %}
+
+{% block date %}
+<div class = "justify-content-end me-2 mt-2 d-flex">
+  <span class = "me-2">DATE:</span>
+  <span class = "date">{{question.date}}</span>
+</div>
+{% endblock date %}

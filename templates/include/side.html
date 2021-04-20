@@ -5,15 +5,6 @@
       {% for tag in popular_tags %}
         <a class = "tag tag-popular" href="{% url 'search_tag' tag %}">{{tag}}</a>
       {% endfor %}
-      {% comment %} <a class = "tag tag-popular" href="html/search_tag.html">CSS</a>
-      <a class = "tag tag-popular" href="html/search_tag.html">Bootstrap</a>
-      <a class = "tag tag-popular" href="html/search_tag.html">MySQL</a>
-      <a class = "tag tag-popular" href="html/search_tag.html">nginx</a>
-      <a class = "tag tag-popular" href="html/search_tag.html">jQuery</a>
-      <a class = "tag tag-popular" href="html/search_tag.html">django</a>
-      <a class = "tag tag-popular" href="html/search_tag.html">python</a>
-      <a class = "tag tag-popular" href="html/search_tag.html">memcached</a>
-      <a class = "tag tag-popular" href="html/search_tag.html">bash</a> {% endcomment %}
     </div>
   </div>
   <div class = "row my-colon">
@@ -24,10 +15,6 @@
         <li><a href="#" class = "cat-in-top">{{cat.name}}</a></li>
         {% endfor %}
         <span>{{cat.name}}</span>
-        {% comment %} <li><a href="#" class = "cat-in-top">Murka</a></li>
-        <li><a href="#" class = "cat-in-top">Mr. Jack</a></li>
-        <li><a href="#" class = "cat-in-top">Petr</a></li>
-        <li><a href="#" class = "cat-in-top">Harry</a></li> {% endcomment %}
       </ul>
     </div>
   </div>

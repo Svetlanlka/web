@@ -11,8 +11,8 @@
   {% endblock description %}
   
       {% block content %}
-        {% for question in questions %}
-          {% include "include/question.html" %}
+        {% for question in questions.questions_list %}
+          {% include "include/question.html" with question=question%}
         {% endfor %}
       
       {% comment %} <div class = "row question question-border">
@@ -154,5 +154,9 @@
         </div>
       </div> {% endcomment %}
       {% endblock content %}
+
+{% block pagination %}
+  {% include "include/pagination.html" %}
+{% endblock pagination %}
 
 </html>

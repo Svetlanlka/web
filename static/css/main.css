@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
 
 a:hover {
-    color:darkblue;
+    color:rgb(4, 4, 63);
 }
 
 main .container.first-container {
@@ -196,4 +196,12 @@ input[type="checkbox"] {
 
 .author {
     color: #0a0b13;
+}
+
+#main_link {
+    color: darkblue im !important;
+}
+
+#main_link:hover {
+    color: red im !important;
 }

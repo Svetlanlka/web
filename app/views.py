@@ -30,15 +30,15 @@ def ask(request):
 def hot_questions(request):
     questns = Question.objects.all().select_related()
     questions = paginate(questns, request, 3)
-    return render(request, 'hot_questions.html', questions)
+    return render(request, 'hot_questions.html', {'questions':questions})
 
 def login(request):
     return render(request, 'login.html', {})
 
 def new_questions(request):
     questns = Question.objects.all().select_related()
-    questions = paginate(questns, request, 3)
-    return render(request, 'new_questions.html', questions)
+    new_questions = paginate(questns, request, 3)
+    return render(request, 'new_questions.html', {'questions': new_questions})
 
 def one_question(request, id):
     q = Question.objects.filter(pk=id)
@@ -48,7 +48,8 @@ def register(request):
     return render(request, 'register.html', {})
 
 def search_tag(request, tag_name):
-    tg_questions = Question.objects.filter(tags__name = tag_name) 
+    filter_tg_questions = Question.objects.filter(tags__name = tag_name) 
+    tg_questions = paginate(filter_tg_questions, request, 3)
     return render(request, 'search_tag.html', {'questions': tg_questions, 'tag':tag_name})
 
 def settings(request):

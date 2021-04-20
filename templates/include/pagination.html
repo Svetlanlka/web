@@ -1,30 +1,31 @@
 {% load static %}
 <div class="container d-flex pages py-1 align-items-center">
-    {% if 1 <= min_page and questions_list.paginator.num_pages != 1%}
+    {% if 1 <= questions.min_page and questions.questions_list.paginator.num_pages != 1%}
         <a href="?page=1" class="page">1 &laquo;</a>
     {% endif %}
 
-    {% if questions_list.has_previous and questions_list.previous_page_number != 1%}
-        {% if min_page > 1 %}
+    {% if questions.questions_list.has_previous and questions.questions_list.previous_page_number != 1%}
+        {% if questions.min_page > 1 %}
           <a href="#" class="page">...</a>
         {% endif %} 
         {% comment %} <a href="?page={{ questions_list.previous_page_number }}" class="page">{{ questions_list.previous_page_number }}</a> {% endcomment %}
     {% endif %}
 
-    {% for p in questions_list.paginator.page_range%}
-        {% if p > min_page and p < max_page%}
-         <a class="page {% if p == questions_list.number %}current_page{% endif %}" href="?page={{p}}">{{p}}</a>
+    {% for p in questions.questions_list.paginator.page_range%}
+        {% if p > questions.min_page and p < questions.max_page and questions.questions_list.paginator.num_pages != 1%}
+         <a class="page {% if p == questions.questions_list.number %}current_page{% endif %}" href="?page={{p}}">{{p}}</a>
         {% endif %}
     {% endfor %}
 
-    {% if questions_list.has_next %}
+    {% if questions.questions_list.has_next %}
         {% comment %} <a href="?page={{ questions_list.next_page_number }}" class="page">{{ questions_list.next_page_number }}</a> {% endcomment %}
-        {% if max_page < questions_list.paginator.num_pages%}
+        {% if questions.max_page < questions.questions_list.paginator.num_pages%}
           <a href="#" class="page">...</a>
         {% endif %}
     {% endif %}
 
-    {% if max_page <= questions_list.paginator.num_pages%}
-          <a href="?page={{ questions_list.paginator.num_pages }}" class="page">&raquo; {{ questions_list.paginator.num_pages }}</a>
+    {% if questions.max_page <= questions.questions_list.paginator.num_pages%}
+          <a href="?page={{ questions.questions_list.paginator.num_pages }}" class="page">&raquo; {{ questions.questions_list.paginator.num_pages }}</a>
     {% endif %}
+    <div>number:{{questions.questions_list.number}} min: {{questions.min_page}} max: {{questions.max_page}} num: {{questions.questions_list.paginator.num_pages}} </div>
   </div>

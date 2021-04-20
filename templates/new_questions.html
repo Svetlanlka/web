@@ -4,16 +4,16 @@
 <html lang="en" class="h-100">
  
 {% block description %}
-  <div class="container-sm text-center mt-3 d-flex align-items-begin justify-content-center">
+  <div class="container-sm text-center mt-3 d-flex align-items-begin justify-content-center first-container">
     <h1>New Questions</h1>
-    {% comment %} <a class = "top-questions-href" href="{% url 'hot_questions' %}">Hot questions</a> {% endcomment %}
+    <a class = "top-questions-href" href="{% url 'hot_questions' %}">Hot questions</a>
   </div>
 {% endblock description %}
 
 {% block content %}
-    {% for question in questions_list %}
-        {% include 'include/question.html' with question=question %}
-    {% endfor %}
+  {% for question in questions.questions_list %}
+    {% include "include/question.html" with question=question%}
+  {% endfor %}
 {% endblock content %}
 
 {% block pagination %}
@@ -160,6 +160,4 @@
     </div>
   </div>
 {% endblock contain %} {% endcomment %}
-
-</html>
 

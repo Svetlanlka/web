@@ -22,7 +22,8 @@
         }
       }
     </style>
-
+    {% block css%}
+    {% endblock css%}
     <link href="{% static 'css/sticky-footer-navbar.css' %}" rel="stylesheet">
     <link href="{% static 'node_modules/bootstrap/scss/_variables.scss' %}" rel="stylesheet">
   </head>
@@ -32,9 +33,8 @@
   {% include "include/navbar.html" %}
 
 <main class="flex-shrink-0 background-img">
+    <div class="container first-container"></div>
     {% block description %}
-      <div class="container first-container">
-      </div>
     {% endblock description %}
   <div class="container">
     <div class="row">

@@ -1,6 +1,19 @@
 {% extends "include/base.html" %}
 {% load static %}
 
+{% block description %}
+  <div class="container-sm text-center mt-3 d-flex align-items-begin justify-content-center">
+    <h1>Hot Questions</h1>
+    {% comment %} <a class = "top-questions-href" href="{% url 'new_questions' %}">New questions</a> {% endcomment %}
+  </div>
+{% endblock description %}
+
 {% block content %}
-    hot
+    {% for question in questions_list %}
+        {% include 'include/question.html' with question=question %}
+    {% endfor %}
 {% endblock content %}
+
+{% block pagination %}
+    {% include "include/pagination.html" %}
+{% endblock pagination %}

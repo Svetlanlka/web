@@ -173,6 +173,10 @@ a.tag:hover {
     box-shadow: none;
 }
 
+.current_page {
+    background-color: rgba(230, 232, 253, 0.3);
+}
+
 
 input[type="checkbox"] {
     margin-right: 5px;

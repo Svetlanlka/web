@@ -1,3 +1,4 @@
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import render
 from django.views import View
 
@@ -27,14 +28,17 @@ def ask(request):
     return render(request, 'ask.html', {})
 
 def hot_questions(request):
-    return render(request, 'hot_questions.html', {})
+    questns = Question.objects.all().select_related()
+    questions = paginate(questns, request, 3)
+    return render(request, 'hot_questions.html', questions)
 
 def login(request):
     return render(request, 'login.html', {})
 
 def new_questions(request):
     questns = Question.objects.all().select_related()
-    return render(request, 'new_questions.html', {"questions":questns})
+    questions = paginate(questns, request, 3)
+    return render(request, 'new_questions.html', questions)
 
 def one_question(request, id):
     q = Question.objects.filter(pk=id)
@@ -57,3 +61,12 @@ def popular_tags_processor(request):
 def top_cats_processor(request):
     top_cats = User.objects.all()
     return {'top_cats':top_cats}
+
+def paginate(objects_list, request, per_page = 5):
+    paginator = Paginator(objects_list, per_page)
+    page = int(request.GET.get('page', 1))
+    max_page = page + 2
+    min_page = page - 2
+
+    questions_list = paginator.get_page(page)
+    return {'questions_list': questions_list, "max_page": max_page, "min_page": min_page}

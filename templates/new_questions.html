@@ -1,8 +1,165 @@
 {% extends "include/base.html" %}
 {% load static %}
+<!doctype html>
+<html lang="en" class="h-100">
+ 
+{% block description %}
+  <div class="container-sm text-center mt-3 d-flex align-items-begin justify-content-center">
+    <h1>New Questions</h1>
+    {% comment %} <a class = "top-questions-href" href="{% url 'hot_questions' %}">Hot questions</a> {% endcomment %}
+  </div>
+{% endblock description %}
 
 {% block content %}
-    {% for question in questions %}
-        {% include 'include/question.html' %}
+    {% for question in questions_list %}
+        {% include 'include/question.html' with question=question %}
     {% endfor %}
 {% endblock content %}
+
+{% block pagination %}
+    {% include "include/pagination.html" %}
+{% endblock pagination %}
+
+{% comment %} {% block contain %}
+  <div class = "row question question-border">
+    <div class="col-3">
+      <div class = "row">
+        <a href = "html/question.html"><img src = "{% static 'img/ava-vk-cats-86.jpg' %}"></a>
+      </div>
+      <div class = "row">
+        <a class = "author" href = "#">Persik</a>
+      </div>
+    </div>
+    <div class="col-9">
+        <div class = "row">
+          <a href="html/question.html" class="question-header">Escape - последовательности</a>
+          <div class="question-description">Какие последовательности 
+            являются escape-последовательностями, запускающимися с “\\033]”</div>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            <span>Answers: </span>
+            <span class="question-count">3</span>
+          </div>
+          <div class="col-7">
+            <span class="question-tags d-flex">
+              <span>Tags: </span>
+              <a class = "tag q-tag" href="html/search_tag.html">bush</a>
+              <a class = "tag q-tag" href="html/search_tag.html">HTML</a>
+              <a class = "tag q-tag" href="html/search_tag.html">JavaScript</a>
+              <a class = "tag q-tag" href="html/search_tag.html">Bootstrap</a>
+            </span>
+          </div>
+        </div>
+        <div class="likes justify-content-end d-flex align-items-center">
+          <span class = "d-flex me-2">5345343</span>
+          <span class="like-count-up d-flex me-1" style="margin: -10px">
+            <img src = "{% static 'img/not-like.png' %}" class = "not-like">
+            <img src = "{% static 'img/is-like.svg' %}" class = "is-like not-view">
+          </span>
+          <span class = "d-flex me-2">22342</span>
+          <span class="like-count-down d-flex" style="margin: -10px">
+            <img src = "{% static 'img/not-dislike.png' %}" class = "not-like not-view">
+            <img src = "{% static 'img/is-dislike.png' %}" class = "is-like">
+          </span>
+        </div>
+        <div class = "justify-content-end me-2 mt-2 d-flex">
+          <span class = "me-2">DATE:</span>
+          <span class = "date">18.12.2021</span>
+        </div>
+    </div>
+  </div>
+  <div class = "row question question-border">
+    <div class="col-3">
+      <div class = "row">
+        <a href = "html/question.html"><img src = "{% static 'img/cat-beautiful.jpg' %}"></a>
+      </div>
+      <div class = "row">
+        <a class = "author" href = "#">Murka</a>
+      </div>
+    </div>
+    <div class="col-9">
+      <div class = "row">
+        <a href="html/question.html" class="question-header">Post и Get запросы</a>
+        <div class="question-description">Post и Get запросы, какая между ними разница и что лучше и для каких целей?</div>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <span>Answers: </span>
+          <span class="question-count">3</span>
+        </div>
+        <div class="col-6">
+          <span class="question-tags d-flex">
+            <span>Tags: </span>
+            <a class = "tag q-tag" href="html/search_tag.html">JavaScript</a>
+            <a class = "tag q-tag" href="html/search_tag.html">HTML</a>
+          </span>
+        </div>
+      </div>
+      <div class="likes justify-content-end d-flex align-items-center">
+        <span class = "d-flex me-2">3333</span>
+        <span class="like-count-up d-flex me-1" style="margin: -10px">
+          <img src = "{% static 'img/not-like.png' %}" class = "not-like">
+          <img src = "{% static 'img/is-like.svg' %}" class = "is-like not-view">
+        </span>
+        <span class = "d-flex me-2">2222</span>
+        <span class="like-count-down d-flex" style="margin: -10px">
+          <img src = "{% static 'img/not-dislike.png' %}" class = "not-like not-view">
+          <img src = "{% static 'img/is-dislike.png' %}" class = "is-like">
+        </span>
+      </div>
+      <div class = "justify-content-end me-2 mt-2 d-flex">
+        <span class = "me-2">DATE:</span>
+        <span class = "date">22.03.2020</span>
+      </div>
+    </div>
+  </div>
+  <div class = "row question question-border">
+    <div class="col-3">
+      <div class = "row">
+        <a href = "html/question.html"><img src = "{% static 'img/cat-smart.jpg' %}"></a>
+      </div>
+      <div class = "row">
+        <a class = "author" href = "#">Mr. Jack</a>
+      </div>
+    </div>
+    <div class="col-9">
+      <div class = "row">
+        <a href="html/question.html" class="question-header">Вопрос про background-image</a>
+        <div class="question-description">Как сделать background-image на весь экран, при условии того, 
+          что будет видна вся картинка?</div>
+      </div>
+      <div class="row">
+        <div class="col-4">
+          <span>Answers: </span>
+          <span class="question-count">3</span>
+        </div>
+        <div class="col-6">
+          <span class="question-tags d-flex">
+            <span>Tags: </span>
+            <a class = "tag q-tag" href="html/search_tag.html">HTML</a>
+          </span>
+        </div>
+      </div>
+      <div class="likes justify-content-end d-flex align-items-center">
+        <span class = "d-flex me-2">3</span>
+        <span class="like-count-up d-flex me-1" style="margin: -10px">
+          <img src = "{% static 'img/not-like.png' %}" class = "not-like">
+          <img src = "{% static 'img/is-like.svg' %}" class = "is-like not-view">
+        </span>
+        <span class = "d-flex me-2">1</span>
+        <span class="like-count-down d-flex" style="margin: -10px">
+          <img src = "{% static 'img/not-dislike.png' %}" class = "not-like not-view">
+          <img src = "{% static 'img/is-dislike.png' %}" class = "is-like">
+        </span>
+      </div>
+      <div class = "justify-content-end me-2 mt-2 d-flex">
+        <span class = "me-2">DATE:</span>
+        <span class = "date">01.01.2021</span>
+      </div>
+    </div>
+  </div>
+{% endblock contain %} {% endcomment %}
+
+</html>
+

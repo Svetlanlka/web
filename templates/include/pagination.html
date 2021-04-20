@@ -1,8 +1,30 @@
 {% load static %}
 <div class="container d-flex pages py-1 align-items-center">
-    <a class="page">1</a>
-    <a class="page">2</a>
-    <a class="page">3</a>
-    <a class="page">...</a>
-    <a class="page">100</a>
+    {% if 1 <= min_page and questions_list.paginator.num_pages != 1%}
+        <a href="?page=1" class="page">1 &laquo;</a>
+    {% endif %}
+
+    {% if questions_list.has_previous and questions_list.previous_page_number != 1%}
+        {% if min_page > 1 %}
+          <a href="#" class="page">...</a>
+        {% endif %} 
+        {% comment %} <a href="?page={{ questions_list.previous_page_number }}" class="page">{{ questions_list.previous_page_number }}</a> {% endcomment %}
+    {% endif %}
+
+    {% for p in questions_list.paginator.page_range%}
+        {% if p > min_page and p < max_page%}
+         <a class="page {% if p == questions_list.number %}current_page{% endif %}" href="?page={{p}}">{{p}}</a>
+        {% endif %}
+    {% endfor %}
+
+    {% if questions_list.has_next %}
+        {% comment %} <a href="?page={{ questions_list.next_page_number }}" class="page">{{ questions_list.next_page_number }}</a> {% endcomment %}
+        {% if max_page < questions_list.paginator.num_pages%}
+          <a href="#" class="page">...</a>
+        {% endif %}
+    {% endif %}
+
+    {% if max_page <= questions_list.paginator.num_pages%}
+          <a href="?page={{ questions_list.paginator.num_pages }}" class="page">&raquo; {{ questions_list.paginator.num_pages }}</a>
+    {% endif %}
   </div>

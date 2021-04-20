@@ -7,6 +7,7 @@ class User(models.Model):
     password = models.CharField(max_length=255, default='None')
     email = models.CharField(max_length=255, default='None')
     photo = models.ImageField(upload_to='img/', null=True, blank=True)
+    is_authorized = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
@@ -22,6 +23,8 @@ class Question(models.Model):
     date = models.DateField()
     tags = models.ManyToManyField('Tag', default = None)
     rating = models.ForeignKey('RatingQuestions', on_delete=models.CASCADE, default=None)
+    is_like = models.BooleanField(default=False)
+    is_dislike = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
@@ -35,6 +38,8 @@ class Answer(models.Model):
     text = models.TextField()
     rating = models.ForeignKey('RatingAnswers', on_delete=models.CASCADE, default=None)
     is_correct = models.BooleanField(default=False)
+    is_like = models.BooleanField(default=False)
+    is_dislike = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.name

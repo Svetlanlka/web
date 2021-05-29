@@ -12,9 +12,9 @@
     <div class="tags">
       <ul class = "top-cats">
         {% for cat in top_cats %}
-        <li><a href="#" class = "cat-in-top">{{cat.name}}</a></li>
+        <li><a href="#" class = "cat-in-top">{{cat.user.username}}</a></li>
         {% endfor %}
-        <span>{{cat.name}}</span>
+        <span>{{cat.user.username}}</span>
       </ul>
     </div>
   </div>

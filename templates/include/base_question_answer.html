@@ -4,14 +4,14 @@
       <div class = "row">
         <a href="{% url 'one_question' id=question.id %}">
         {% if question.user.profile.photo %}
-          <img src = "{{STATIC_URL}}{{question.user.profile.photo.url}}" alt={{question.user.profile.name}}>
+          <img src = "{{STATIC_URL}}{{question.user.profile.photo.url}}" alt={{question.user.profile.user.username}}>
         {% else %}
           <img src = "{% static 'img/avatar.png' %}">
         {% endif %}
         </a>
       </div>
       <div class = "row">
-        <div class = "author">{{question.user.profile.name}}</div>
+        <div class = "author">{{question.user.profile.user.username}}</div>
       </div>
     </div>
     <div class="col-9">
@@ -23,15 +23,19 @@
           </div>
           <div class="question-description">{{question.text}}</div>
         </div>
+
         {% block correct %}
         {% endblock correct %}
+
         <div class="row">
           {% block answerscol %}
           {% endblock answerscol %}
+
           {% block tags %}
-          {% endblock tags %}
+         {% endblock tags %}
         </div>
-        {% include "include/(dis)likes.html" %}
+
+        {% include "include/vote.html" with vote_object=question %}
         {% block date %}
         {% endblock date %}
     </div>

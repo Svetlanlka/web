@@ -1,4 +1,4 @@
-{% extends "include/base_question.html" %}
+{% extends "include/base_question_answer.html" %}
 {% load static %}
 
 {% block qborder %}
@@ -8,7 +8,7 @@
 {% block answerscol %}
 <div class="col-4">
   <span>Answers: </span>
-  <span class="question-count">{{question.answers.count}}</span>
+  <span class="question-count">{{question.answer_set.count}}</span>
 </div>
 {% endblock answerscol %}
 

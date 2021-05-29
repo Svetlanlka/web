@@ -28,7 +28,12 @@ urlpatterns = [
     path('hot_questions/', views.hot_questions, name='hot_questions'),
     path('login/', views.login, name = 'login'),
     path('new_questions/', views.new_questions, name='new_questions'),
-    path('questions/<int:id>/', views.one_question, name='one_question'),
+    path('questions/<int:id>/', include([
+        path('', views.one_question, name='one_question'),
+        path('vote/', views.vote, name='vote'),
+    ])),
+    
+    
     path('register/', views.register, name = 'register'),
     path('search_tag/<slug:tag_name>/', views.search_tag, name='search_tag'),
     path('settings/', views.settings, name = 'settings'),
@@ -36,6 +41,7 @@ urlpatterns = [
     # path('pages/', include('django.contrib.flatpages.urls')),
     # path('contact/', include("contact.urls")),
     path('', views.index),
+    path('a_vote/', views.a_vote, name='a_vote'),
 ]
 
 

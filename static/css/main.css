@@ -197,11 +197,3 @@ input[type="checkbox"] {
 .author {
     color: #0a0b13;
 }
-
-#main_link {
-    color: darkblue im !important;
-}
-
-#main_link:hover {
-    color: red im !important;
-}

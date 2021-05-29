@@ -4,7 +4,7 @@
 {% block description %}
   <div class="container first-container text-center d-flex  align-items-begin justify-content-center">
     <h1>Settings:</h1>
-    <span class = "my-name"><h1> Mr. Jack</h1></span>
+    <span class = "my-name"><h1> {{user.username}}</h1></span>
   </div>
 {% endblock description %}
 
@@ -12,28 +12,28 @@
   <form class="ask-title">
       <div class="input-group mb-3 mt-3">
           <label for="validationServer01" class="col-2 form-label">Login</label>
-          <input type="text" id = "validationServer01" class = "col-10 form-control is-valid" placeholder="Введите логин" required>
+          <input type="text" id = "validationServer01" class = "col-10 form-control" placeholder="Введите логин" required>
           <div id="validationServer02" class="invalid-feedback">
             Please enter login
           </div>
       </div>
       <div class="input-group mb-3 mt-3">
         <label class="col-2 form-label" for="validationServer02">Email</label>
-        <input type="email" id = "validationServer02" class = "col-10 form-control is-valid" placeholder="Введите почту" required>
+        <input type="email" id = "validationServer02" class = "col-10 form-control" placeholder="Введите почту" required>
         <div id="validationServer02" class="invalid-feedback">
           Please enter email
         </div>
       </div>
       <div class="input-group mb-3 mt-3">
         <label class="col-2 form-label" for = "validationServerUsername">Username</label>
-        <input type="text" id="validationServerUsername" class = "col-10 is-invalid form-control" placeholder="Введите имя пользователя" required>
+        <input type="text" id="validationServerUsername" class = "col-10 form-control" placeholder="Введите имя пользователя" required>
         <div id="validationServerUsernameFeedback" class="invalid-feedback">
           Please choose a username
         </div>
       </div>
       <div class="input-group mb-3">
         <label class="col-2 form-label" for="validationServer03">Upload photo</label>
-        <input type = "file" id = "validationServer03" class = "form-control col-10 is-valid" placeholder="Загрузите свое фото" aria-label="file example" required>
+        <input type = "file" id = "validationServer03" class = "form-control col-10" placeholder="Загрузите свое фото" aria-label="file example" required>
         <div class="invalid-feedback" id="validationServer03">File doesn't exist</div>
       </div>
       <div class="d-flex justify-content-end">

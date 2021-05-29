@@ -9,11 +9,11 @@
 {% endblock description %}
 
 {% block content %}
-  {% for question in questions.questions_list %}
+  {% for question in page.list %}
     {% include "include/question.html" with question=question%}
   {% endfor %}
 {% endblock content %}
 
 {% block pagination %}
-    {% include "include/pagination.html" %}
+    {% include "include/pagination.html"%}
 {% endblock pagination %}

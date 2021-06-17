@@ -1,21 +1,22 @@
 {% extends "include/base.html" %}
 {% load static %}
+{% load bootstrap4 %}
+
 {% block content %}
     <div class="d-flex"><h2 class="mt-3">QUESTION: </h2></div>
-      {% include "include/base_question.html" %}
+      {% include "include/question.html" %}
     <div class="d-flex justify-content-center"><h1 class="mt-3">ANSWERS</h1></div>
       {% for answer in answers.list %}
-      {% include "include/answer.html" with question=answer %}
+      {% include "include/answer.html" with answer=answer %}
       {% endfor %}
   <div class = "justify-content-end me-2 mt-2 d-flex">
     <span class = "me-2">DATE:</span>
     <span class = "date">{{question.date}}</span>
   </div>
    <div class="row">
-      <form>
-          <div class="input-group mt-2">
-              <textarea placeholder="Напишите сюда свой ответ на вопрос" style="height: 150px" class="col-12"></textarea>
-          </div>
+      <form class="row ask-title" action="{% url 'one_question' question.pk %}" method="post">
+          {% csrf_token %}
+          {{ form }}
           <div class="d-flex justify-content-start mt-2 mb-3">
               <button class="btn btn-dark" type="submit" href = "#">ANSWER</button>
           </div>
@@ -26,3 +27,4 @@
 {% block pagination %}
     {% include "include/pagination.html" with page=answers%}
 {% endblock pagination %}
+      

@@ -1,6 +1,27 @@
 {% extends "include/base_question_answer.html" %}
 {% load static %}
 
+{% block top%}
+ {% if question.user.profile.photo %}
+  <img src = "{{STATIC_URL}}{{question.user.profile.photo.url}}" alt={{question.user.profile.user.username}}>
+{% else %}
+  <img src = "{% static 'img/avatar.png' %}">
+{% endif %}
+{% endblock top %}
+
+{% block username %}
+    <div class = "author">{{question.user.profile.user.username}}</div>
+{% endblock username %}
+
+{% block content %}
+<div href="html/question.html" class="question-header">
+    <a href="{% url 'one_question' id=question.id %}">
+      {{ question.title }}
+    </a>
+  </div>
+  <div class="question-description">{{question.text}}</div>
+{% endblock content %}
+
 {% block qborder %}
 <div class = "row question question-border">
 {% endblock qborder%}
@@ -22,6 +43,11 @@
   </span>
 </div>
 {% endblock tags %}
+
+{% block vote %}
+Rating:<span class = "d-flex me-2" d="question_vote{{ question.pk }}">{{question.rating}}</span>
+{% include "include/vote.html" with vote_object=question %}
+{% endblock vote%}
 
 {% block date %}
 <div class = "justify-content-end me-2 mt-2 d-flex">

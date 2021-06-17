@@ -3,25 +3,19 @@
     <div class="col-3">
       <div class = "row">
         <a href="{% url 'one_question' id=question.id %}">
-        {% if question.user.profile.photo %}
-          <img src = "{{STATIC_URL}}{{question.user.profile.photo.url}}" alt={{question.user.profile.user.username}}>
-        {% else %}
-          <img src = "{% static 'img/avatar.png' %}">
-        {% endif %}
+        {% block top %}
+        {% endblock top %}
         </a>
       </div>
       <div class = "row">
-        <div class = "author">{{question.user.profile.user.username}}</div>
+      {% block username %}
+      {% endblock username %}   
       </div>
     </div>
     <div class="col-9">
         <div class = "row">
-          <div href="html/question.html" class="question-header">
-            <a href="{% url 'one_question' id=question.id %}">
-              {{ question.title }}
-            </a>
-          </div>
-          <div class="question-description">{{question.text}}</div>
+        {% block content %}
+        {% endblock content %}
         </div>
 
         {% block correct %}
@@ -35,7 +29,9 @@
          {% endblock tags %}
         </div>
 
-        {% include "include/vote.html" with vote_object=question %}
+        {% block vote %}
+        {% endblock vote%}
+
         {% block date %}
         {% endblock date %}
     </div>

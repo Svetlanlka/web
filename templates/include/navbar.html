@@ -23,7 +23,7 @@
             <div class = "d-flex">
               <div class = "container-sm">
                 <div class="row">
-                  <a class="btn btn-sm btn-outline-secondary" href="#">Log out</a>
+                  <a class="btn btn-sm btn-outline-secondary" href="{% url 'logout' %}">Log out</a>
                 </div>
                 <div class="row">
                   <a class="btn btn-sm btn-outline-secondary" href="{% url 'settings' %}">Settings</a>
@@ -31,13 +31,13 @@
               </div>
             </div>
             <div class="d-flex">
-              <a class="link-secondary" href="#" aria-label="Search">
-                {% if user.profile.photo %}
-                  <img src = "{{STATIC_URL}}{{user.profile.photo.url}}" alt={{user.profile.user.username}} class="my-avatar">
-                {% else %}
-                  <img src="{% static 'img/avatar.png' %}" class="my-avatar">
-                {% endif %}
-              </a>
+                <a class="link-secondary " href="{% url 'settings' %}" aria-label="Search">
+                  {% if request.user.profile.photo %}
+                    <img src = "{{request.user.profile.photo.url}}" alt={{user.profile.user.username}} class="my-avatar">{{user.profile.user.username}}
+                  {% else %}
+                    <img src="{% static 'img/avatar.png' %}" class="my-avatar">{{user.profile.user.username}}
+                  {% endif %}
+                </a>
             </div>
           </div>
           {% else %}

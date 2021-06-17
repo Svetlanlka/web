@@ -1,37 +1,20 @@
-{%extends "include/base.html" %}
+{%extends "include/form.html" %}
 {% load static %}
-<!doctype html>
-<html lang="en" class="h-100">
+{% load bootstrap4 %}
 
-{% include "include/navbar.html" %}
-           
-      {% block content %}
-      <form class="ask-title">
-        <div class="input-group mb-3 mt-3">
-          <label for="validationServer01" class="col-2 form-label">Title</label>
-          <input type="text" id = "validationServer01" class = "col-10 form-control" placeholder="Введите логин" required>
-          <div id="validationServer02" class="invalid-feedback">
-            Please enter title
-          </div>
-          </div>
-          <div class="input-group mb-3">
-            <label class="col-2 form-label" for="validationServer02">Text</label>
-            <textarea class = "col-10 form-control" id = "validationServer02" style="height: 150px" placeholder="Введите текст вопроса"></textarea>
-            <div id="validationServer02" class="invalid-feedback">
-              Please enter question text
-            </div>
-          </div>
-          <div class="input-group mb-3">
-            <label class="col-2 form-label" for="validationServer03">Tags</label>
-            <input type="text" id = "validationServer03" class = "col-10 form-control" placeholder="Введите теги" required>
-            <div id="validationServer02" class="invalid-feedback">
-              Wrong tags
-            </div>
-          </div>
-          <div class="d-flex justify-content-end">
-            <button class="btn btn-dark" type="submit" href = "#">ASK</button>
-          </div>
-      </form>  
-      {% endblock content %}           
+ {% block title %}
+  <h1>New Question</h1>
+{% endblock title %}
 
-</html>
+{% block formmethod %}
+ <form class="row ask-title" action="/ask/" method="POST" novalidate enctype="multipart/form-data">
+{% csrf_token %}
+{% bootstrap_form_errors form %}
+{% bootstrap_form form show_label=False %}
+{% endblock formmethod%}
+
+{% block buttons %}
+<div class="d-flex justify-content-end mt-2">
+    <button class="btn btn-dark" type="submit">ASK</button>
+</div> 
+{% endblock buttons %}

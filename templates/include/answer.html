@@ -1,5 +1,26 @@
-{% extends "include/base_question_answer.html" %}
+{% extends "include/base_question_answer.html"%}
 {% load static %}
+
+{% block top%}
+ {% if answer.user.profile.photo %}
+  <img src = "{{STATIC_URL}}{{answer.user.profile.photo.url}}" alt={{answer.user.profile.user.username}}>
+{% else %}
+  <img src = "{% static 'img/avatar.png' %}">
+{% endif %}
+{% endblock top %}
+
+{% block username %}
+  <div class = "author">{{answer.user.profile.user.username}}</div>
+{% endblock username %}
+
+{% block content %}
+<div href="html/question.html" class="question-header">
+    <a href="{% url 'one_question' id=question.id %}">
+      {{ answer.title }}
+    </a>
+  </div>
+  <div class="question-description">{{answer.text}}</div>
+{% endblock content %}
 
 {% block qborder %}
 <div class = "row question question-border">
@@ -7,16 +28,22 @@
 
 {% block correct %}
 <div class="col-4 d-flex">
-  <input class="form-check-input" type="checkbox" {% if question.is_correct %}checked{% endif %}>
-  {% if question.is_correct %}<div style="color:green">Correct!</div>
+  <input class="form-check-input" type="checkbox" {% if answer.is_correct %}checked{% endif %}>
+  {% if answer.is_correct %}<div style="color:green">Correct!</div>
   {% else %}<div style="color:red">Wrong!</div>{% endif %}
   
 </div>
 {% endblock correct %}
 
+
+{% block vote %}
+Rating:<span class = "d-flex me-2" d="answer_vote{{ answer.pk }}">{{answer.rating}}</span>
+{% include "include/vote.html" with vote_object=answer %}
+{% endblock vote%}
+
 {% block date %}
 <div class = "justify-content-end me-2 mt-2 d-flex">
   <span class = "me-2">DATE:</span>
-  <span class = "date">{{question.date}}</span>
+  <span class = "date">{{answer.date}}</span>
 </div>
 {% endblock date %}

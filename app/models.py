@@ -16,111 +16,24 @@ def create_user_profile(sender, instance, created, **kwargs):
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
+class ProfileManager(models.Manager):
+    def top_five(self):
+        return self.all().order_by('-rating')[:5]
+
 class Profile(models.Model):
-    # name убрать
     user = models.OneToOneField(User, on_delete=models.CASCADE, default=None)
-    photo = models.ImageField(upload_to='img/', null=True, blank=True)
-    rating = models.IntegerField(null=False,default=0)
+    photo = models.ImageField(upload_to='uploads/', default="cat-smart.jpg")
+    rating = models.IntegerField(default=0)
 
     def __str__(self):
         return self.user.username
+
+    objects = ProfileManager()
 
     class Meta:
         verbose_name = 'Профиль пользователя'
         verbose_name_plural = 'Профили пользователей'
 
-class QuestionManager(models.Manager):
-    def get_top(self):
-        return self.all().order_by('-rating').prefetch_related('user', 'tags')
-
-    def get_new(self):
-        return self.all().order_by('-date').prefetch_related('user', 'tags')
-
-    def get_on_tag(search_tag):
-        questions = self.all().filter(tags__tag__iexact=search_tag).prefetch_related('user')
-        if not questions:
-            raise Http404
-        return questions
-
-    def get_on_id(new_id):
-        try:
-            question = self.get(pk=new_id)
-        except ObjectDoesNotExist:
-            raise Http404
-        return question
-
-
-class Question(models.Model):
-    title = models.CharField(max_length=255, default=None)
-    text = models.TextField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None, related_name='u_questions')
-    date = models.DateTimeField() #datetime
-    tags = models.ManyToManyField('Tag', default = None)
-    rating = models.IntegerField(null=False, default=0) #make int
-    # delete is_like
-    # delete is_dislike
-    # delete answers
-
-    def __str__(self):
-        return self.title
-
-    def update_score(self):
-        vsum = self.vQuestions.aggregate(Sum('vote'))
-        self.rating = vsum['vote__sum']
-        self.save(update_fields=['rating'])
-        return self.rating
-
-    objects = QuestionManager()
-
-    class Meta:
-        verbose_name = 'Вопрос'
-        verbose_name_plural = 'Вопросы'
-
-class AnswerManager(models.Manager):
-     def get_top(self, new_question):
-        return self.filter(question=new_question).order_by('-is_correct', '-score')
-
-     def get_on_id(self, search_id):
-        try:
-            answer = self.get(pk=search_id)
-        except ObjectDoesNotExist:
-            raise Http404
-        return answer
-   
-
-class Answer(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None, related_name='u_answers')
-    text = models.TextField()
-    rating = models.IntegerField(null=False, default=0)
-    is_correct = models.BooleanField(default=False)
-    date = models.DateTimeField()
-    question = models.ForeignKey('Question', on_delete=models.CASCADE, default=None) #Foreignkey question
-
-    def __str__(self):
-        return self.question.title + ' user: ' + self.user.username
-
-    def update_score(self):
-        vsum = self.vAnswers.aggregate(Sum('vote'))
-        self.rating = vsum['vote__sum']
-        self.save(update_fields=['rating'])
-        return self.rating
-
-    objects = AnswerManager()
-
-    class Meta:
-        verbose_name = 'Ответ'
-        verbose_name_plural = 'Ответы'
-
-#контролировать уникальность unique
-class Tag(models.Model):
-    name = models.CharField(max_length=100, unique=True, default=None)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = 'Тег'
-        verbose_name_plural = 'Теги'
 
 # отдельный класс AnswerVote, QuestionVote
 # 2 Foreign key to user
@@ -183,38 +96,112 @@ class QuestionVote(models.Model, VoteInterface):
             'user',
             'question',
         ]
-    
-    
+
+class QuestionManager(models.Manager):
+    def get_top(self):
+        return self.all().order_by('-rating').prefetch_related('user', 'tags')
+
+    def get_new(self):
+        return self.all().order_by('-date').prefetch_related('user', 'tags')
+
+    def get_on_tag(self, search_tag):
+        questions = self.all().filter(tags__tag__iexact=search_tag).prefetch_related('user')
+        if not questions:
+            raise Http404
+        return questions
+
+    def get_on_id(self, new_id):
+        try:
+            question = self.get(pk=new_id)
+        except ObjectDoesNotExist:
+            raise Http404
+        return question
 
 
-# class RatingAnswers(models.Model):
-#     rating_id = models.IntegerField(null=False, default=0)
-#     likes = models.IntegerField(null=False, default=0)
-#     dislikes = models.IntegerField(null=True, default=0)
-#     user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+class Question(models.Model):
+    title = models.CharField(max_length=255, default=None)
+    text = models.TextField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None, related_name='u_questions')
+    date = models.DateTimeField() #datetime
+    rating = models.IntegerField(default=0) #make int
+    tags = models.ManyToManyField('Tag', default = None)
+    # delete is_like
+    # delete is_dislike
+    # delete answers
 
-#     def __str__(self):
-#         return str(self.likes - self.dislikes)
+    def __str__(self):
+        return self.title
 
-#     def get_rating(self):
-#         return self.likes - self.dislikes
+    def update_rating(self):
+        q = QuestionVote.objects.all().filter(fk_question=self.id)
+        sum = 0
+        for i in q:
+            sum += i.vote
+        rating = sum
+        print("Question Vote changed to: ", rating)
+        return rating
 
-#     class Meta:
-#         verbose_name = 'Рейтинг ответов'
-#         verbose_name_plural = 'Рейтинг ответов'
+    objects = QuestionManager()
 
-# class RatingQuestions(models.Model):
-#     rating_id = models.IntegerField(null=False, default=0)
-#     likes = models.IntegerField(null=False, default=0)
-#     dislikes = models.IntegerField(null=True, default=0)
-#     user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+    class Meta:
+        verbose_name = 'Вопрос'
+        verbose_name_plural = 'Вопросы'
 
-#     def __str__(self):
-#         return str(self.likes - self.dislikes)
-    
-#     def get_rating(self):
-#         return self.likes - self.dislikes
+class AnswerManager(models.Manager):
+     def get_top(self, new_question):
+        return self.filter(question=new_question).order_by('-is_correct', '-rating')
 
-#     class Meta:
-#         verbose_name = 'Рейтинг вопросов'
-#         verbose_name_plural = 'Рейтинг вопросов'
+     def get_on_id(self, search_id):
+        try:
+            answer = self.get(pk=search_id)
+        except ObjectDoesNotExist:
+            raise Http404
+        return answer
+   
+
+class Answer(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None, related_name='u_answers')
+    text = models.TextField()
+    is_correct = models.BooleanField(default=False)
+    date = models.DateTimeField()
+    rating = models.IntegerField(default=0)
+    question = models.ForeignKey('Question', on_delete=models.CASCADE, default=None) #Foreignkey question
+
+    def __str__(self):
+        return self.question.title + ' user: ' + self.user.username
+
+    objects = AnswerManager()
+
+    def update_rating(self):
+        q = AnswerVote.objects.all().filter(answer_id=self.id)
+        sum = 0
+        for i in q:
+            sum += i.vote
+        rating = sum
+        print("Answer Vote changed to: ", rating)
+        return rating
+
+    class Meta:
+        verbose_name = 'Ответ'
+        verbose_name_plural = 'Ответы'
+
+class TagManager(models.Manager):
+    def top_ten(self):
+        return self.all().order_by('-rating')[:10]
+
+#контролировать уникальность unique
+class Tag(models.Model):
+    name = models.CharField(max_length=100, unique=True, default=None)
+    rating = models.IntegerField(default=0)
+
+    objects=TagManager()
+
+    def __str__(self):
+        return self.name
+
+    def set_rating(self):
+        self.rating+=1
+
+    class Meta:
+        verbose_name = 'Тег'
+        verbose_name_plural = 'Теги'

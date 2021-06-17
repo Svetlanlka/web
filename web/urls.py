@@ -23,25 +23,24 @@ from django.conf import settings
 
 from app import views
 urlpatterns = [
+    path('', views.index, name='main'),
     path('admin/', admin.site.urls),
     path('ask/', views.ask, name = 'ask'),
     path('hot_questions/', views.hot_questions, name='hot_questions'),
     path('login/', views.login, name = 'login'),
+    path('logout/', views.logout, name = 'logout'),
     path('new_questions/', views.new_questions, name='new_questions'),
     path('questions/<int:id>/', include([
         path('', views.one_question, name='one_question'),
-        path('vote/', views.vote, name='vote'),
+        path('vote/', views.question_vote, name='vote'),
     ])),
-    
-    
     path('register/', views.register, name = 'register'),
     path('search_tag/<slug:tag_name>/', views.search_tag, name='search_tag'),
     path('settings/', views.settings, name = 'settings'),
-    path('accounts/', include('allauth.urls')),
+    # path('accounts/', include('allauth.urls')),
     # path('pages/', include('django.contrib.flatpages.urls')),
     # path('contact/', include("contact.urls")),
-    path('', views.index),
-    path('a_vote/', views.a_vote, name='a_vote'),
+    path('answer_vote/', views.answer_vote, name='a_vote'),
 ]
 
 

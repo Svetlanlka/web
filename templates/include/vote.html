@@ -1,23 +1,23 @@
 {% load static %}
 
-{% vote_object_liked_by user vote_object as liked %}
-{% vote_object_disliked_by user vote_object as disliked %}
+{% comment %} {% vote_object.vote user vote_object as liked %} {% endcomment %}
+{% comment %} {% vote_object_vote user vote_object as disliked %} {% endcomment %}
 
 <div class="likes justify-content-end d-flex align-items-center">
-    <span class = "d-flex me-2">{{question.rating.likes}}</span>
+    
     <span class="like-count-up d-flex me-1" style="margin: -10px">
-    {% if liked %}
+    {% comment %} {% if liked %} {% endcomment %}
     <img src = "{% static 'img/is-like.png' %}" class = "is-like">
-    {% else %}
-    <img src = "{% static 'img/not-like.png' %}" class = "not-like">
-    {% endif %}
+    {% comment %} {% else %} {% endcomment %}
+    {% comment %} <img src = "{% static 'img/not-like.png' %}" class = "not-like"> {% endcomment %}
+    {% comment %} {% endif %} {% endcomment %}
     </span>
     <span class = "d-flex me-2">{{question.rating.dislikes}}</span>
     <span class="like-count-down d-flex" style="margin: -10px">
-    {% if disliked %}
-    <img src = "{% static 'img/is-dislike.png' %}" class = "is-like">
-    {% else %}
+    {% comment %} {% if disliked %}  {% endcomment %}
+    {% comment %} <img src = "{% static 'img/is-dislike.png' %}" class = "is-like"> {% endcomment %}
+    {% comment %} {% else %} {% endcomment %}
     <img src = "{% static 'img/not-dislike.png' %}" class = "not-like">
-    {% endif %}
+    {% comment %} {% endif %} {% endcomment %}
     </span>
 </div>

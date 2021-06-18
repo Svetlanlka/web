@@ -10,10 +10,9 @@
 {% endblock title %}
 
 {% block formmethod %}
- <form class="row ask-title" action="/settings/" method="post">
+ <form class="row ask-title" method="post" novalidate enctype="multipart/form-data">
 {% csrf_token %}
-{% bootstrap_form user_form %}
-{% bootstrap_form profile_form %}
+{% bootstrap_form form %}
 {% endblock formmethod%}
 
 {% block buttons %}

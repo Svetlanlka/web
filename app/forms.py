@@ -17,6 +17,10 @@ class RegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True, label='Enter email', max_length=256)
     photo = forms.ImageField(required=False, label='Choose photo', widget=forms.FileInput())
 
+    def __init__(self, *args, **kwargs):
+        self.FILES = kwargs.pop('FILES', None)
+        super(RegistrationForm, self).__init__(*args, **kwargs)
+
     class Meta:
         model = User
         fields = ('username', 'password1',
@@ -26,16 +30,50 @@ class UserForm(forms.ModelForm):
     username = forms.CharField(required=True, label='Enter new login', max_length=256)
     email = forms.EmailField(required=True, label='Enter new email', max_length=256)
 
+    def save(self, *args, **kwargs):
+        user = super(UserForm, self).save(*args, **kwargs)
+        user.username = self.cleaned_data['username']
+        user.email = self.cleaned_data['email']
+        user.save()
+        return user
+
     class Meta:
         model = User
         fields = ('username', 'email')
 
 class ProfileForm(forms.ModelForm):
-    photo = forms.ImageField(required=False, label='Choose new photo', widget=forms.FileInput())
+    photo = forms.ImageField(required=True, label='Choose new photo', widget=forms.FileInput())
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        self.FILES = kwargs.pop('FILES', None)
+        super(ProfileForm, self).__init__(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        profile = super(ProfileForm, self).save(*args, **kwargs)
+        profile.user = self.user
+        profile.photo = self.cleaned_data['photo']
+        profile.save()
+        print(profile.photo)
+        return profile
 
     class Meta:
         model = Profile
         fields = ('photo',)
+
+
+class SettingsForm(forms.ModelForm):
+    photo = forms.ImageField(required=True, label='Choose new photo', widget=forms.FileInput())
+
+    def save(self, *args, **kwargs):
+        user = super().save(*args, **kwargs)
+        user.profile.photo = self.cleaned_data['photo']
+        user.profile.save()
+        return user
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'photo')
 
 class QuestionForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):

@@ -99,9 +99,10 @@ class Command(BaseCommand):
 
         usernames = set()
 
-        file_path_type = "static/img/*.jpg"
+        file_path_type = "uploads/*.jpg"
         images = glob.glob(file_path_type)
-
+        images = [images[8:] for images in images]
+        print(images)
 
         while len(usernames) != n:
             usernames.add(Faker().user_name() + str(Faker().random.randint(0, 1000000)))

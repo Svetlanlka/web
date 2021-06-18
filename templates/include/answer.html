@@ -3,14 +3,14 @@
 
 {% block top%}
  {% if answer.user.profile.photo %}
-  <img src = "{{STATIC_URL}}{{answer.user.profile.photo.url}}" alt={{answer.user.profile.user.username}}>
+  <img src = "{{MEDIA_URL}}{{answer.user.profile.photo.url}}" alt={{answer.user.username}}>
 {% else %}
   <img src = "{% static 'img/avatar.png' %}">
 {% endif %}
 {% endblock top %}
 
 {% block username %}
-  <div class = "author">{{answer.user.profile.user.username}}</div>
+  <div class = "author">{{answer.user.username}}</div>
 {% endblock username %}
 
 {% block content %}

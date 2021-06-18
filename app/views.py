@@ -7,7 +7,7 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 
 from app.models import Question, Tag, Profile, Answer, QuestionVote, AnswerVote
 from django.contrib.auth.models import User
-from .forms import LoginForm, RegistrationForm, UserForm, ProfileForm, QuestionForm, AnswerForm
+from .forms import LoginForm, RegistrationForm, UserForm, ProfileForm, QuestionForm, AnswerForm, SettingsForm
 from django.contrib import auth
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -28,26 +28,6 @@ def new_questions(request):
     print(new_questions)
     return render(request, 'new_questions.html', {'page': new_questions})
 
-def one_question(request, id):
-    q = Question.objects.get(pk=id)
-    q2 = Answer.objects.filter(question=q)
-    answers = paginate(q2, request, 3)
-    context = {'question': q, 'answers': answers}
-
-    if request.method == 'GET':
-        form = AnswerForm()
-    else:
-        if request.user.is_authenticated:
-            form = AnswerForm(data=request.POST,
-                              request=request, question_id=id)
-            if form.is_valid():
-                answer = form.save()
-                return redirect(reverse('one_question', kwargs={'id': id}) + f'#{answer.pk}')
-        else:
-            return redirect(reverse('login') + f'?next={request.path}')
-    context['form'] = form
-
-    return render(request, 'one_question.html', context)
 
 def search_tag(request, tag_name):
     filter_tg_questions = Question.objects.filter(tags__name = tag_name) 
@@ -124,28 +104,6 @@ def register(request):
    
     return render(request, 'register.html', {'form': form})
 
-@login_required
-def settings(request):
-    if request.method == 'GET':
-        user_form = UserForm(instance=request.user)
-        profile_form = ProfileForm(instance=request.user.profile)
-    else:
-        user_form = UserForm(data=request.POST,instance=request.user)
-        profile_form = ProfileForm(
-            data=request.POST,
-            instance=request.user.profile,
-            user=request.user,
-            FILES=request.FILES
-        )
-        if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
-            profile_form.save()
-        else:
-            return redirect(reverse('settings'))
-        return redirect(reverse('main'))
-
-    return render(request, 'settings.html', {'user_form': user_form,'profile_form': profile_form})
-
 
 def ask(request):
     if request.method == 'GET':
@@ -156,6 +114,50 @@ def ask(request):
             question = form.save()
             return redirect(reverse('one_question', kwargs={'id': question.pk}))
     return render(request, 'ask.html', {'form': form})
+
+def one_question(request, id):
+    q = Question.objects.get(pk=id)
+    q2 = Answer.objects.filter(question=q)
+    answers = paginate(q2, request, 3)
+    context = {'question': q, 'answers': answers}
+
+    if request.method == 'GET':
+        form = AnswerForm()
+    else:
+        if request.user.is_authenticated:
+            form = AnswerForm(data=request.POST,
+                              request=request, question_id=id)
+            if form.is_valid():
+                answer = form.save()
+                return redirect(reverse('one_question', kwargs={'id': id}) + f'#{answer.pk}')
+        else:
+            return redirect(reverse('login') + f'?next={request.path}')
+    context['form'] = form
+
+    return render(request, 'one_question.html', context)
+
+@login_required
+def settings(request):
+    if request.method == 'GET':
+        #user_form = UserForm(instance=request.user)
+        #profile_form = ProfileForm(instance=request.user.profile)
+        form = SettingsForm()
+    else:
+        #user_form = UserForm(data=request.POST,instance=request.user)
+        form = ProfileForm(
+            data=request.POST,
+            FILES=request.FILES,
+            instance=request.user,
+        )
+        if form.is_valid(): #and profile_form.is_valid():
+            form.save()
+            #profile_form.save()
+        else:
+            return redirect(reverse('settings'))
+        return redirect(reverse('main'))
+
+    return render(request, 'settings.html', {'form': form})
+
 
 
 

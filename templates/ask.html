@@ -7,7 +7,7 @@
 {% endblock title %}
 
 {% block formmethod %}
- <form class="row ask-title" action="/ask/" method="POST" novalidate enctype="multipart/form-data">
+ <form class="row ask-title" action="/ask/" method="POST" novalidate>
 {% csrf_token %}
 {% bootstrap_form_errors form %}
 {% bootstrap_form form show_label=False %}

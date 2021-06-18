@@ -22,7 +22,7 @@ class ProfileManager(models.Manager):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, default=None)
-    photo = models.ImageField(upload_to='uploads/', default="cat-smart.jpg")
+    photo = models.ImageField(upload_to='avatars/', default="cat-smart.jpg")
     rating = models.IntegerField(default=0)
 
     def __str__(self):

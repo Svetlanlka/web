@@ -5,6 +5,7 @@ from django.db import models
 from .models import Question, Answer, User, Profile
 from django.core.exceptions import ValidationError
 import datetime
+import re
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField()
@@ -21,48 +22,24 @@ class RegistrationForm(UserCreationForm):
         self.FILES = kwargs.pop('FILES', None)
         super(RegistrationForm, self).__init__(*args, **kwargs)
 
+    def save(self, *args, **kwargs):
+        user = super(RegistrationForm, self).save(*args, **kwargs)
+        user.refresh_from_db()
+        if (self.FILES['photo']):
+            user.profile.photo = self.FILES['photo']
+        user.profile.save()
+        user.email = self.cleaned_data['email']
+        user.save()
+        return user 
+
     class Meta:
         model = User
         fields = ('username', 'password1',
                   'password2', 'email', 'photo')
 
-class UserForm(forms.ModelForm):
-    username = forms.CharField(required=True, label='Enter new login', max_length=256)
-    email = forms.EmailField(required=True, label='Enter new email', max_length=256)
-
-    def save(self, *args, **kwargs):
-        user = super(UserForm, self).save(*args, **kwargs)
-        user.username = self.cleaned_data['username']
-        user.email = self.cleaned_data['email']
-        user.save()
-        return user
-
-    class Meta:
-        model = User
-        fields = ('username', 'email')
-
-class ProfileForm(forms.ModelForm):
-    photo = forms.ImageField(required=True, label='Choose new photo', widget=forms.FileInput())
-
-    def __init__(self, *args, **kwargs):
-        self.user = kwargs.pop('user', None)
-        self.FILES = kwargs.pop('FILES', None)
-        super(ProfileForm, self).__init__(*args, **kwargs)
-
-    def save(self, *args, **kwargs):
-        profile = super(ProfileForm, self).save(*args, **kwargs)
-        profile.user = self.user
-        profile.photo = self.cleaned_data['photo']
-        profile.save()
-        print(profile.photo)
-        return profile
-
-    class Meta:
-        model = Profile
-        fields = ('photo',)
-
 
 class SettingsForm(forms.ModelForm):
+    email = forms.EmailField(required=True, label='Enter email', max_length=256)
     photo = forms.ImageField(required=True, label='Choose new photo', widget=forms.FileInput())
 
     def save(self, *args, **kwargs):
@@ -70,6 +47,20 @@ class SettingsForm(forms.ModelForm):
         user.profile.photo = self.cleaned_data['photo']
         user.profile.save()
         return user
+
+    def clean(self):
+        data = super().clean()
+
+        name = data['username']
+        if re.fullmatch('^([a-z]|[A-Z])+\S+$', name) is None:
+            self.add_error(
+                'username',
+                'Start your nickname with letter and do not use whitespace-characters'
+            )
+            
+        # email = data['email']
+        # if re.fullmatch('^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$', email) is None:
+        #     self.add_error('email', 'Email is not valid')
 
     class Meta:
         model = User
@@ -88,6 +79,16 @@ class QuestionForm(forms.ModelForm):
         question.tags.set(self.request.POST.getlist('tags'))
         question.save()
         return question
+
+    def clean(self):
+        data = super().clean()
+        title = data['title']
+        if re.fullmatch('^([a-z]|[A-Z])+[^\n\t\r]+$', title) is None:
+            self.add_error('title', 'Title start with letter or contains wrong symbols')
+
+        tags = data['tags']
+        if len(tags) > 5:
+            self.add_error('tags', 'You can choose up to 5 tags')
 
     class Meta:
         model = Question

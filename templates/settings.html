@@ -10,10 +10,10 @@
 {% endblock title %}
 
 {% block formmethod %}
- <form class="row ask-title" method="post" novalidate enctype="multipart/form-data">
+ <form class="row ask-title" method="post" enctype="multipart/form-data">
 {% csrf_token %}
 {% bootstrap_form form %}
-{% endblock formmethod%}
+{% endblock formmethod %}
 
 {% block buttons %}
 <div class="d-flex justify-content-end mt-2">

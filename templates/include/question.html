@@ -45,8 +45,7 @@
 {% endblock tags %}
 
 {% block vote %}
-Rating:<span class = "d-flex me-2" d="question_vote{{ question.pk }}">{{question.rating}}</span>
-{% include "include/vote.html" with vote_object=question %}
+{% include "include/question_vote.html" with vote_object=question %}
 {% endblock vote%}
 
 {% block date %}
@@ -54,5 +53,4 @@ Rating:<span class = "d-flex me-2" d="question_vote{{ question.pk }}">{{question
   <span class = "me-2">DATE:</span>
   <span class = "date">{{question.date}}</span>
 </div>
-<div>Rating: {{question.rating}}</div>
 {% endblock date %}

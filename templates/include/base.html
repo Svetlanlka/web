@@ -25,7 +25,7 @@
     {% block css%}
     {% endblock css%}
     <link href="{% static 'css/sticky-footer-navbar.css' %}" rel="stylesheet">
-    <link href="{% static 'node_modules/bootstrap/scss/_variables.scss' %}" rel="stylesheet">
+    {% comment %} <link href="{% static 'node_modules/bootstrap/scss/_variables.scss' %}" rel="stylesheet"> {% endcomment %}
   </head>
 
 <body class="d-flex flex-column h-100">    
@@ -60,8 +60,12 @@
   {% include "include/footer.html" %}
 {% endblock footer %}
 
+  <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+  <script src="{% static 'js/csrf.js' %}"></script>
   <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-      
+  <script src="{% static 'js/vote.js' %}"></script>
+  <script src="{% static 'js/correct.js' %}"></script>
+
   </body>
 </html>
 

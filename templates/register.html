@@ -7,7 +7,7 @@
 {% endblock title %}
 
 {% block formmethod %}
- <form class="row ask-title" action="/register/" method="post">
+ <form class="row ask-title" action="/register/" method="post" enctype="multipart/form-data">
 {% csrf_token %}
 {% bootstrap_form_errors form %}
 {% bootstrap_form form show_label=False %}

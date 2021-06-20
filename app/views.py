@@ -7,10 +7,11 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 
 from app.models import Question, Tag, Profile, Answer, QuestionVote, AnswerVote
 from django.contrib.auth.models import User
-from .forms import LoginForm, RegistrationForm, UserForm, ProfileForm, QuestionForm, AnswerForm, SettingsForm
+from .forms import LoginForm, RegistrationForm, QuestionForm, AnswerForm, SettingsForm
 from django.contrib import auth
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.db.models import F
 
 # Create your views here.
 
@@ -28,7 +29,6 @@ def new_questions(request):
     print(new_questions)
     return render(request, 'new_questions.html', {'page': new_questions})
 
-
 def search_tag(request, tag_name):
     filter_tg_questions = Question.objects.filter(tags__name = tag_name) 
     tg_questions = paginate(filter_tg_questions, request, 3)
@@ -45,12 +45,13 @@ def top_cats_processor(request):
 def paginate(objects_list, request, per_page = 5):
     paginator = Paginator(objects_list, per_page)
     page = int(request.GET.get('page', 1))
-    max_page = page + 4
-    min_page = page - 4
+    max_page = page + 3
+    min_page = page - 3
 
     obList = paginator.get_page(page)
     return {'list': obList, "max_page": max_page, "min_page": min_page}
 
+# dz4
 def login(request):
     if request.GET.get('next'):
         next_url = request.GET.get('next')
@@ -77,7 +78,7 @@ def login(request):
 
     return render(request, 'login.html', {'form': form})
 
-
+@login_required
 def logout(request):
     auth.logout(request)
     return redirect(reverse('main'))
@@ -104,7 +105,7 @@ def register(request):
    
     return render(request, 'register.html', {'form': form})
 
-
+@login_required
 def ask(request):
     if request.method == 'GET':
         form = QuestionForm()
@@ -136,22 +137,19 @@ def one_question(request, id):
 
     return render(request, 'one_question.html', context)
 
+# dz5
 @login_required
 def settings(request):
     if request.method == 'GET':
-        #user_form = UserForm(instance=request.user)
-        #profile_form = ProfileForm(instance=request.user.profile)
         form = SettingsForm()
     else:
-        #user_form = UserForm(data=request.POST,instance=request.user)
-        form = ProfileForm(
+        form = SettingsForm(
             data=request.POST,
-            FILES=request.FILES,
+            files=request.FILES,
             instance=request.user,
         )
-        if form.is_valid(): #and profile_form.is_valid():
+        if form.is_valid():
             form.save()
-            #profile_form.save()
         else:
             return redirect(reverse('settings'))
         return redirect(reverse('main'))
@@ -159,57 +157,97 @@ def settings(request):
     return render(request, 'settings.html', {'form': form})
 
 
-
-
-
-
 @require_POST
-def question_vote(request, question_id):
+def answer_vote(request):
+    not_login = False
     if request.user.is_anonymous:
-        return JsonResponse({'is_anonymous': True})
-    opinion = str(request.POST.get('opinion'))
-    question = Question.objects.find_by_id(question_id)
-    vote = QuestionVote.objects.find_or_create(question, request.user)
-    if opinion.lower() == 'like':
-        vote.like()
-    elif opinion.lower() == 'dislike':
-        vote.dislike()
-    else:
-        return JsonResponse({'is_voted': False})
-    new_question_score = question.update_score()
-    question.author.profile.update_score()
+        not_login = True
+        return JsonResponse({'not_login': not_login})
+    data = request.POST
+    objid = data['obj_id']
+    action = data['action']
+    answer = Answer.objects.get_on_id(objid)
+    vote = AnswerVote.objects.find_or_create(answer, request.user)
+    before = vote.vote
 
+    if (action=='like'): 
+        vote.like()
+    elif (action=='dislike'):
+        vote.dislike()
+
+    #v = AnswerVote.ACTIONS[action]
+    v = vote.vote - before
+    print('before', before)
+    print('after', vote.vote)
+    answer.update_rating(v)
+    answer.save()
+    answer.user.profile.update_rating(v)
+    answer.user.profile.save()
+
+    not_login = False
+    if request.user.is_anonymous:
+        not_login = True
     data = {
-        'is_anonymous': False,
-        'is_voted': True,
+        'not_login': not_login,
         'vote': vote.vote,
-        'new_obj_score': new_question_score,
+        'vote_rating': answer.rating
     }
+
     return JsonResponse(data)
 
 
 @require_POST
-def answer_vote(request):
+def question_vote(request, id):
+    not_login = False
     if request.user.is_anonymous:
-        return JsonResponse({'is_anonymous': True})
-    answer_id = int(request.POST.get('obj_id'))
-    opinion = str(request.POST.get('opinion'))
-    answer = Answer.objects.find_by_id(answer_id)
-    vote = AnswerVote.objects.find_or_create(answer, request.user)
-    if opinion.lower() == 'like':
-        vote.like()
-    elif opinion.lower() == 'dislike':
-        vote.dislike()
-    else:
-        return JsonResponse({'is_voted': False})
-    new_answer_score = answer.update_score()
-    answer.author.profile.update_score()
+        not_login = True
+        return JsonResponse({'not_login': not_login})
 
+    data = request.POST
+    objid = data['obj_id']
+    action = data['action']
+ 
+    question = Question.objects.get_on_id(objid)
+    vote = QuestionVote.objects.find_or_create(question, request.user)
+    before = vote.vote
+
+    if (action=='like'): 
+        vote.like()
+    elif (action=='dislike'):
+        vote.dislike()
+    
+    v = vote.vote - before
+    question.update_rating(v)
+    question.save()
+    question.user.profile.update_rating(v)
+    question.user.profile.save()
+
+    
     data = {
-        'is_anonymous': False,
-        'is_voted': True,
+        'not_login': not_login,
         'vote': vote.vote,
-        'new_obj_score': new_answer_score,
+        'vote_rating': question.rating
     }
 
+    return JsonResponse(data)
+
+
+@require_POST
+def change_correct(request):
+    not_login = False
+    if request.user.is_anonymous:
+        not_login = True
+        return JsonResponse({'not_login': not_login})
+
+    data = request.POST
+    objid = data['obj_id']
+
+    answer = Answer.objects.get_on_id(objid)
+    answer.change_correct()
+
+    
+    data = {
+        'not_login': not_login,
+        'is_correct': answer.is_correct,
+    }
     return JsonResponse(data)

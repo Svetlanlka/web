@@ -25,8 +25,8 @@ size_values = {
         'answers': 200,
         'tags': 50,
         'users': 50,
-        'avotes': 100,
-        'qvotes': 100
+        'avotes': 1000,
+        'qvotes': 1000
     },
     'large': {
         'questions': 110000,
@@ -102,7 +102,6 @@ class Command(BaseCommand):
         file_path_type = "uploads/*.jpg"
         images = glob.glob(file_path_type)
         images = [images[8:] for images in images]
-        print(images)
 
         while len(usernames) != n:
             usernames.add(Faker().user_name() + str(Faker().random.randint(0, 1000000)))
@@ -160,9 +159,9 @@ class Command(BaseCommand):
                 user_id=choice(users),
                 text=". ".join(Faker().sentences(Faker().random_int(min=2, max=5))),
                 date=Faker().date_between("-100d", "today"),
+                is_correct = Faker().random.randint(0, 1)
             )
-            if (Faker().random_int(min=0, max=5) == 0):
-                answer.marked_correct = True
+            
             answers.append(answer)
 
         batch_size = 100
@@ -182,12 +181,18 @@ class Command(BaseCommand):
         votes = []
 
         for i in range(n):
+            q = choice(questions)
+            u = choice(users)
+            v = Faker().random.randint(-1, 1)
             vote = QuestionVote(
-                question_id=choice(questions),
-                user_id=choice(users),
-                vote=Faker().random.randint(-1, 1)
+                question_id=q,
+                user_id=u,
+                vote=v,
             )
             votes.append(vote)
+            question = Question.objects.get_on_id(q)
+            question.update_rating(v)
+            question.save()
 
         batch_size = 100
         n_batches = len(votes)
@@ -208,14 +213,16 @@ class Command(BaseCommand):
         for i in range(n):
             ans_id = choice(answers)
             usr_id = choice(users)
+            v = Faker().random.randint(-1, 1)
             vote = AnswerVote(
                 answer_id= ans_id,
                 user_id=usr_id,
-                vote=Faker().random.randint(-1, 1))
+                vote=v
+            )
             votes.append(vote)
-            # ans = Answer.objects.get_on_id(ans_id)
-            # ans.update_rating()
-            # ans.save(update_fields=['rating'])
+            answer = Answer.objects.get_on_id(ans_id)
+            answer.update_rating(v)
+            answer.save()
 
         batch_size = 100
         n_batches = len(votes)

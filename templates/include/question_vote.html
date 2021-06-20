@@ -1,0 +1,37 @@
+{% load static %}
+{% load tags %}
+
+{% if user.is_anonymous %}
+{% false_tag as is_liked %}
+{% false_tag as is_disliked %}
+{% else %}
+{% question_liked vote_object user as is_liked %}
+{% question_disliked vote_object user as is_disliked %}
+{% endif %}
+
+<div class="likes justify-content-end d-flex align-items-center">
+    
+    <span class="like-count-up d-flex me-1" style="margin: -10px">
+    <a href="#" class="js-vote" data-action="like" data-objid="{{vote_object.pk}}" data-href="question" id="question_like{{vote_object.pk}}"
+        style="display: {% if is_liked %}block{% else %}none{% endif %}">
+        <img src = "{% static 'img/is-like.png' %}" class = "is-like" style="width:25px;">
+    </a>
+    <a href="#" class="js-vote" data-action="like" data-objid="{{vote_object.pk}}" data-href="question" id="question_not_like{{vote_object.pk}}"
+        style="display: {% if is_liked %}none{% else %}block{% endif %}">
+        <img src = "{% static 'img/not-like.png' %}" class = "not-like" style="width:25px;">
+    </a>
+
+    </span>
+    <span class = "d-flex me-2" id="question_rating{{vote_object.pk}}">{% if vote_object.rating >= 0%}{{vote_object.rating}}{% else %}0{% endif %}</span>
+    <span class="like-count-down d-flex" style="margin: -10px">
+
+    <a href="#" class="js-vote" data-action="dislike" data-objid="{{vote_object.pk}}" data-href="question" id="question_dislike{{vote_object.pk}}"
+        style="display: {% if is_disliked %}block{% else %}none{% endif %}">
+        <img src = "{% static 'img/is-dislike.png' %}" class = "is-dislike" style="width:25px;">
+    </a>
+    <a href="#" class="js-vote" data-action="dislike" data-objid="{{vote_object.pk}}" data-href="question" id="question_not_dislike{{vote_object.pk}}"
+        style="display: {% if is_disliked %}none{% else %}block{% endif %}">
+        <img src = "{% static 'img/not-dislike.png' %}" class = "not-dislike" style="width:25px;">
+    </a>
+    </span>
+</div>

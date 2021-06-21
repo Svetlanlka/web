@@ -1,0 +1,20 @@
+{%extends "include/form.html" %}
+{% load static %}
+{% load bootstrap4 %}
+
+ {% block title %}
+  <h1>New Question</h1>
+{% endblock title %}
+
+{% block formmethod %}
+ <form class="row ask-title" action="/ask/" method="POST" novalidate>
+{% csrf_token %}
+{% bootstrap_form_errors form %}
+{% bootstrap_form form show_label=False %}
+{% endblock formmethod%}
+
+{% block buttons %}
+<div class="d-flex justify-content-end mt-2">
+    <button class="btn btn-dark" type="submit">ASK</button>
+</div> 
+{% endblock buttons %}

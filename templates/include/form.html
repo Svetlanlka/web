@@ -1,0 +1,27 @@
+{%extends "include/base.html" %}
+{% load static %}
+{% load bootstrap4 %}
+<!doctype html>
+<html lang="en" class="h-100">
+
+  {% block description %}
+  <div class="container first-container text-center d-flex  align-items-begin justify-content-center">
+    {% block title %}
+    {% endblock title %}
+  </div>
+  {% endblock description %}
+        
+{% block content %}
+    {% block formmethod %}
+    <form class="row ask-title" action="/login/" method="post">
+        {% csrf_token %}
+        {{ form }}
+    {% endblock formmethod%}
+        {% block buttons %}
+        {% endblock buttons %}
+    </form>
+    {% block other %}
+    {% endblock other %}
+{% endblock content %}
+
+</html>

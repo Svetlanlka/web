@@ -1,0 +1,23 @@
+{%extends "include/base.html" %}
+{% load static %}
+<!doctype html>
+<html lang="en" class="h-100">
+  
+  {% block description %}
+  <div class="container first-container d-flex align-items-center">
+    <h2>Tag: </h2>
+    <div class="tag-find p-2">{{tag}}</div>
+  </div>
+  {% endblock description %}
+  
+      {% block content %}
+        {% for question in page.list %}
+          {% include "include/question.html" with question=question%}
+        {% endfor %}
+      {% endblock content %}
+
+{% block pagination %}
+  {% include "include/pagination.html" %}
+{% endblock pagination %}
+
+</html>

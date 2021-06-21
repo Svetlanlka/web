@@ -1,0 +1,20 @@
+[
+{
+	"model": "autho.user",
+	"pk": 1,
+	"fields": {
+		"password": "svetlanlka",
+		"last_login": null,
+		"is_superuser":true,
+		"username": "admin",
+		"first_name": "Persik",
+		"last_name": "Persikov",
+		"email": "persik@mail.ru",
+		"is_staff":true,
+		"is_active":true,
+		"date_joined":"2020-06-25T19:37:09.895Z",
+		"groups": [],
+		"user_permissions": []
+	}
+
+}

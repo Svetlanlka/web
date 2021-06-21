@@ -1,0 +1,27 @@
+{% extends "include/base.html" %}
+{% load static %}
+
+{% block css%}
+<link href= "{% static 'css/index.css' %}" rel="stylesheet">
+{% endblock css%}
+
+{% block description %}
+<div class="container introduce first-container">
+    Hello! Interested in the WEB ? Join our group of cats-programmers!
+    Ask questions and help others. 
+    Increase you rating and become professional in web programming!
+  </div>
+{% endblock description%}
+
+{% block content %}
+
+<a href="{% url 'new_questions' %}"><div id="link" class="link">Новые вопросы</div></a>
+<a href="{% url 'hot_questions'%}"><div id="link" class="link">Топовые вопросы</div></a>
+<a href="{% url 'one_question' id=4 %}"><div id="link" class="link">Страница одного вопроса (Ex.)</div></a>
+<a href="{% url 'search_tag' 'HTML' %}"><div id="link" class="link">Список вопросов по тегу (Ex. HTML)</div></a>
+<a href="{% url 'ask' %}"><div id="link" class="link">Добавление вопроса</div></a>
+<a href="{% url 'login' %}"><div id="link" class="link">Вход</div></a>
+<a href="{% url 'register' %}"><div id="link" class="link">Регистрация</div></a>
+<a href="{% url 'settings' %}"><div id="link" class="link">Настройки пользователя</div></a>
+
+{% endblock content %}

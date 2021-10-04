@@ -1,0 +1,29 @@
+{% load static %}
+<div class="container d-flex pages py-1 align-items-center">
+    {% if 1 <= page.min_page and page.list.paginator.num_pages != 1%}
+        <a href="?page=1" class="page">1 &laquo;</a>
+    {% endif %}
+
+    {% if page.list.has_previous and page.list.previous_page_number != 1%}
+        {% if page.min_page > 1 %}
+          <a href="#" class="page">...</a>
+        {% endif %} 
+    {% endif %}
+
+    {% for p in page.list.paginator.page_range%}
+        {% if p > page.min_page and p < page.max_page and page.list.paginator.num_pages != 1%}
+         <a class="page {% if p == page.list.number %}current_page{% endif %}" href="?page={{p}}">{{p}}</a>
+        {% endif %}
+    {% endfor %}
+
+    {% if page.list.has_next %}
+        {% if page.max_page < page.list.paginator.num_pages%}
+          <a href="#" class="page">...</a>
+        {% endif %}
+    {% endif %}
+
+    {% if page.max_page <= page.list.paginator.num_pages%}
+          <a href="?page={{ page.list.paginator.num_pages }}" class="page">&raquo; {{ page.list.paginator.num_pages }}</a>
+    {% endif %}
+    {% comment %} <div>number:{{page.list.number}} min: {{page.min_page}} max: {{page.max_page}} num: {{page.list.paginator.num_pages}} </div> {% endcomment %}
+  </div>

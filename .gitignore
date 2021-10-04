@@ -1,0 +1,6 @@
+venv/
+node_modules/
+.idea/
+.vscode/
+*.рус
+__pycache__/

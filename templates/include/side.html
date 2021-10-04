@@ -1,0 +1,20 @@
+{% load static %}
+<div class = "row my-colon">
+    <h3>Popular Tags</h3>
+    <div class="tags">
+      {% for tag in popular_tags %}
+        <a class = "tag tag-popular" href="{% url 'search_tag' tag %}">{{tag}}</a>
+      {% endfor %}
+    </div>
+  </div>
+  <div class = "row my-colon">
+    <h3>TOP-5 Cats</h3>
+    <div class="tags">
+      <ul class = "top-cats">
+        {% for cat in top_cats %}
+        <li><a href="#" class = "cat-in-top">{{cat.user.username}}</a></li>
+        {% endfor %}
+        <span>{{cat.user.username}}</span>
+      </ul>
+    </div>
+  </div>

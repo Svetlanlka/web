@@ -1,0 +1,25 @@
+{%extends "include/form.html" %}
+{% load static %}
+{% load bootstrap4 %}
+
+ {% block title %}
+  <h1>Login</h1>
+{% endblock title %}
+
+{% block formmethod %}
+ <form class="row ask-title" action="/login/" method="post">
+{% csrf_token %}
+{{ form }}
+{% endblock formmethod%}
+
+{% block buttons %}
+<div class="d-flex justify-content-end mt-2">
+    <button class="btn btn-dark" type="submit">LOG IN</button>
+</div> 
+{% endblock buttons %}
+
+{% block other %}
+<div class = "row">
+    Don't have an account? <a href="{% url 'register' %}" style = "color:darkblue;">Быстрее регистрируйся)</a>
+</div>
+{% endblock other %}

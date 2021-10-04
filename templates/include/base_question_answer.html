@@ -1,0 +1,38 @@
+{% load static %}
+{% block qborder %}<div class = "row question">{% endblock qborder%}
+    <div class="col-3">
+      <div class = "row">
+        <a href="{% url 'one_question' id=question.id %}">
+        {% block top %}
+        {% endblock top %}
+        </a>
+      </div>
+      <div class = "row">
+      {% block username %}
+      {% endblock username %}   
+      </div>
+    </div>
+    <div class="col-9">
+        <div class = "row">
+        {% block content %}
+        {% endblock content %}
+        </div>
+
+        {% block correct %}
+        {% endblock correct %}
+
+        <div class="row">
+          {% block answerscol %}
+          {% endblock answerscol %}
+
+          {% block tags %}
+         {% endblock tags %}
+        </div>
+
+        {% block vote %}
+        {% endblock vote%}
+
+        {% block date %}
+        {% endblock date %}
+    </div>
+</div>
